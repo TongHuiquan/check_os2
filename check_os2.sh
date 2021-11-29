@@ -474,28 +474,6 @@ print_intro() {
 	printf ' Usage : wget -qO- sb.oldking.net | bash\n' | tee -a $log
 }
 
-sharetest() {
-	echo " Share result:" | tee -a $log
-	echo " · $result_speed" | tee -a $log
-	log_preupload
-	case $1 in
-	'ubuntu')
-		share_link="https://paste.ubuntu.com"$( curl -v --data-urlencode "content@$log_up" -d "poster=superbench.sh" -d "syntax=text" "https://paste.ubuntu.com" 2>&1 | \
-			grep "Location" | awk '{print $3}' );;
-	'haste' )
-		share_link=$( curl -X POST -s -d "$(cat $log)" https://hastebin.com/documents | awk -F '"' '{print "https://hastebin.com/"$4}' );;
-	'clbin' )
-		share_link=$( curl -sF 'clbin=<-' https://clbin.com < $log );;
-	'ptpb' )
-		share_link=$( curl -sF c=@- https://ptpb.pw/?u=1 < $log );;
-	esac
-
-	echo " · $share_link" | tee -a $log
-	next
-	echo ""
-	rm -f $log_up
-
-}
 
 log_preupload() {
 	log_up="$HOME/superbench_upload.log"
