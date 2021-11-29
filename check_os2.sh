@@ -530,7 +530,6 @@ bench_all(){
 	print_end_time;
 	next;
 	cleanup;
-	sharetest ubuntu;
 }
 
 fast_bench(){
@@ -576,29 +575,9 @@ case $1 in
 		about;;
 	'fast'|'-f'|'--f'|'-fast'|'--fast' )
 		fast_bench;;
-	'share'|'-s'|'--s'|'-share'|'--share' )
-		bench_all;
-		is_share="share"
-		if [[ $2 == "" ]]; then
-			sharetest ubuntu;
-		else
-			sharetest $2;
-		fi
-		;;
 	'debug'|'-d'|'--d'|'-debug'|'--debug' )
 		get_ip_whois_org_name;;
 *)
     bench_all;;
 esac
 
-if [[  ! $is_share == "share" ]]; then
-	case $2 in
-		'share'|'-s'|'--s'|'-share'|'--share' )
-			if [[ $3 == '' ]]; then
-				sharetest ubuntu;
-			else
-				sharetest $3;
-			fi
-			;;
-	esac
-fi
